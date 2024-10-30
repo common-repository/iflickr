@@ -1,0 +1,30 @@
+<?php
+
+// Generate warnings if the Flickr Key is not valid
+if (strlen(get_option('iflickr_api_key')) == 0) {
+  $error = __("You must enter a Flickr API Key for the iflickr plugin to run.", $iflickr->l); }
+else if (!$iflickr->validate_api_key()) {
+  $error = __("You have entered an invalid Flickr API Key.", $iflickr->l); }
+
+if (isset($error)) {
+  echo "<div id='message' class='updated fade'><p><strong>{$error}</strong></p></div>"; }
+
+?>
+
+<br><br><br><br>
+
+<form method='post' action='options.php'>
+<?php wp_nonce_field('update-options'); ?>
+<table align='center'>
+<tr><td><?php _e("Flickr API Key", $iflickr->l); ?></td><td><input type='text' size='32' name='iflickr_api_key' value='<?php echo get_option('iflickr_api_key'); ?>' /></td></tr>
+<tr><td></td><td><?php echo _e("Get a Flickr API Key <a href='http://www.flickr.com/services/api/keys/'>here</a>", $iflickr->l); ?>.</td></tr>
+<tr><td><?php _e("Image CSS Class", $iflickr->l); ?></td><td><input type='text' size='32' name='iflickr_img_class' value='<?php echo get_option('iflickr_img_class'); ?>' /></td></tr>
+<tr><td><?php _e("Attribution Text", $iflickr->l); ?></td><td><input type='text' size='32' name='iflickr_attr_text' value='<?php echo get_option('iflickr_attr_text'); ?>' /></td></tr>
+<tr><td><?php _e("Attribution CSS Class", $iflickr->l); ?></td><td><input type='text' size='32' name='iflickr_attr_class' value='<?php echo get_option('iflickr_attr_class'); ?>' /></td></tr>
+<tr><td colspan='2'><p class='submit'><input type='submit' name='Submit' value='<?php _e('Update Options »') ?>' /></p></td></tr>
+</table>
+<input type='hidden' name='action' value='<?php echo _e("update", $l); ?>' />
+<input type='hidden' name='page_options' value='iflickr_api_key,iflickr_img_class,iflickr_attr_text,iflickr_attr_class' />
+</form>
+
+<br><br><br><br>
